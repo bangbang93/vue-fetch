@@ -27,7 +27,7 @@ const VueFetch = {
       credentials: 'include',
     })
   },
-  patch(url, body){
+  put(url, body){
     return fetch(url, {
       method: 'put',
       headers: new Headers({
@@ -52,10 +52,33 @@ const VueFetch = {
       query = new URLSearchParams(query);
       query = query.toString();
     }
-    return fetch(`${url}?${query}`, {
+    if (query){
+      url = `${url}?${query}`
+    }
+    return fetch(url, {
       method: 'DELETE',
       credentials: 'include'
     });
+  },
+  fetch(method, url, query, body){
+    if (typeof query != 'string'){
+      query = new URLSearchParams(query);
+      query = query.toString();
+    }
+    if (query){
+      url = `${url}?${query}`
+    }
+    let options = {
+      method: method.toUpperCase(),
+      credentials: 'include'
+    };
+    if (body){
+      options.headers = new Headers({
+        'content-type': 'application/json'
+      });
+      options.body = JSON.stringify(body);
+    }
+    return fetch(url, options);
   }
 };
 
