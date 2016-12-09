@@ -12,7 +12,10 @@ const VueFetch = {
       query = new URLSearchParams(query);
       query = query.toString();
     }
-    return fetch(`${url}?${query}`, {credentials: 'include'});
+    if (query){
+      url = `${url}?${query}`
+    }
+    return fetch(url, {credentials: 'include'});
   },
   post(url, body){
     return fetch(url, {
