@@ -5,7 +5,9 @@
 
 import 'whatwg-fetch'
 import 'url-search-params-polyfill'
-import 'es6-promise'
+import ES6Promise from 'es6-promise'
+
+ES6Promise.polyfill();
 
 const VueFetch = {
   get(url, query){
