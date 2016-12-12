@@ -10,8 +10,7 @@ import 'es6-promise'
 const VueFetch = {
   get(url, query){
     if (typeof query != 'string'){
-      query = new URLSearchParams(query);
-      query = query.toString();
+      query = objToSearch(query);
     }
     if (query){
       url = `${url}?${query}`
@@ -89,4 +88,13 @@ export default {
   install: function (Vue, options) {
     Vue.prototype.$fetch = VueFetch;
   }
+}
+
+function objToSearch(obj){
+  let query = new URLSearchParams();
+  let keys = Object.keys(obj);
+  keys.forEach((key)=>{
+    query.set(key, obj[key]);
+  });
+  return query.toString();
 }
