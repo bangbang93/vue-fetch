@@ -1,6 +1,6 @@
 {
   "name": "vue-fetch",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "simplify fetch api for vue",
   "main": "lib/index.js",
   "scripts": {
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/bangbang93/vue-fetch#readme",
   "dependencies": {
+    "es6-promise": "^4.0.5",
     "url-search-params-polyfill": "^1.0.1",
     "whatwg-fetch": "^2.0.1"
   },
