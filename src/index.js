@@ -7,8 +7,6 @@ import 'whatwg-fetch'
 import 'url-search-params-polyfill'
 import ES6Promise from 'es6-promise'
 
-ES6Promise.polyfill();
-
 const VueFetch = {
   get(url, query){
     if (typeof query != 'string'){
@@ -87,8 +85,11 @@ const VueFetch = {
 
 
 export default {
-  install: function (Vue, options) {
+  install: function (Vue, {polyfill = true}) {
     Vue.prototype.$fetch = VueFetch;
+    if (options.polyfill){
+      ES6Promise.polyfill();
+    }
   }
 }
 

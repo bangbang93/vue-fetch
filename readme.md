@@ -16,7 +16,9 @@ So I wrote this small plugin
 import VueFetch from 'vue-fetch'
 import Vue from 'vue'
 
-Vue.use(VueFetch);
+Vue.use(VueFetch, {
+  polyfill: true   //should vue-fetch load promise polyfill, set to false to use customer polyfill
+});
 
 const vm = new Vue({
     
