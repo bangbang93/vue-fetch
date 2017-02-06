@@ -85,7 +85,7 @@ const VueFetch = {
 
 
 export default {
-  install: function (Vue, {polyfill = true}) {
+  install: function (Vue, options = {polyfill: true}) {
     Vue.prototype.$fetch = VueFetch;
     if (options.polyfill){
       ES6Promise.polyfill();
