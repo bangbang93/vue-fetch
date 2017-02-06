@@ -9,10 +9,10 @@ import ES6Promise from 'es6-promise'
 
 const VueFetch = {
   get(url, query){
-    if (typeof query != 'string'){
-      query = objToSearch(query);
-    }
     if (query){
+      if (typeof query != 'string'){
+        query = objToSearch(query);
+      }
       url = `${url}?${query}`
     }
     return fetch(url, {credentials: 'include'});
@@ -48,12 +48,11 @@ const VueFetch = {
     })
   },
   del(url, query){
-    if (typeof query != 'string'){
-      query = new URLSearchParams(query);
-      query = query.toString();
-    }
     if (query){
-      url = `${url}?${query}`
+      url = `${url}?${query}`;
+      if (typeof query != 'string'){
+        query = objToSearch(query);
+      }
     }
     return fetch(url, {
       method: 'DELETE',
@@ -62,8 +61,7 @@ const VueFetch = {
   },
   fetch(method, url, query, body){
     if (typeof query != 'string'){
-      query = new URLSearchParams(query);
-      query = query.toString();
+      query = objToSearch(query);
     }
     if (query){
       url = `${url}?${query}`
