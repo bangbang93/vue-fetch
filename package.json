@@ -1,6 +1,6 @@
 {
   "name": "vue-fetch",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "simplify fetch api for vue",
   "main": "lib/index.js",
   "scripts": {

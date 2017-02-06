@@ -49,10 +49,10 @@ const VueFetch = {
   },
   del(url, query){
     if (query){
-      url = `${url}?${query}`;
       if (typeof query != 'string'){
         query = objToSearch(query);
       }
+      url = `${url}?${query}`;
     }
     return fetch(url, {
       method: 'DELETE',
@@ -60,10 +60,10 @@ const VueFetch = {
     });
   },
   fetch(method, url, query, body){
-    if (typeof query != 'string'){
-      query = objToSearch(query);
-    }
     if (query){
+      if (typeof query != 'string'){
+        query = objToSearch(query);
+      }
       url = `${url}?${query}`
     }
     let options = {
