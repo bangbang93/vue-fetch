@@ -7,17 +7,19 @@ import 'whatwg-fetch'
 import 'url-search-params-polyfill'
 import ES6Promise from 'es6-promise'
 
-const VueFetch = {
-  get(url, query){
-    if (query){
-      if (typeof query != 'string'){
+export const Fetch = {
+  get(url, query) {
+    if (query) {
+      if (typeof query != 'string') {
         query = objToSearch(query);
       }
       url = `${url}?${query}`
     }
-    return fetch(url, {credentials: 'include'});
+    return fetch(url, {
+      credentials: 'include'
+    });
   },
-  post(url, body){
+  post(url, body) {
     return fetch(url, {
       method: 'POST',
       headers: new Headers({
@@ -27,7 +29,7 @@ const VueFetch = {
       credentials: 'include',
     })
   },
-  put(url, body){
+  put(url, body) {
     return fetch(url, {
       method: 'put',
       headers: new Headers({
@@ -37,7 +39,7 @@ const VueFetch = {
       credentials: 'include',
     })
   },
-  patch(url, body){
+  patch(url, body) {
     return fetch(url, {
       method: 'PATCH',
       headers: new Headers({
@@ -47,9 +49,9 @@ const VueFetch = {
       credentials: 'include',
     })
   },
-  del(url, query){
-    if (query){
-      if (typeof query != 'string'){
+  del(url, query) {
+    if (query) {
+      if (typeof query != 'string') {
         query = objToSearch(query);
       }
       url = `${url}?${query}`;
@@ -59,9 +61,9 @@ const VueFetch = {
       credentials: 'include'
     });
   },
-  fetch(method, url, query, body){
-    if (query){
-      if (typeof query != 'string'){
+  fetch(method, url, query, body) {
+    if (query) {
+      if (typeof query != 'string') {
         query = objToSearch(query);
       }
       url = `${url}?${query}`
@@ -70,7 +72,7 @@ const VueFetch = {
       method: method.toUpperCase(),
       credentials: 'include'
     };
-    if (body){
+    if (body) {
       options.headers = new Headers({
         'content-type': 'application/json'
       });
@@ -80,21 +82,19 @@ const VueFetch = {
   }
 };
 
-
-
-export default {
-  install: function (Vue, options = {polyfill: true}) {
-    Vue.prototype.$fetch = VueFetch;
-    if (options.polyfill){
-      ES6Promise.polyfill();
-    }
+export function install(Vue, options = {
+  polyfill: true
+}) {
+  Vue.prototype.$fetch = Fetch;
+  if (options.polyfill) {
+    ES6Promise.polyfill();
   }
 }
 
-function objToSearch(obj){
+function objToSearch(obj) {
   let query = new URLSearchParams();
   let keys = Object.keys(obj);
-  keys.forEach((key)=>{
+  keys.forEach((key) => {
     query.set(key, obj[key]);
   });
   return query.toString();
