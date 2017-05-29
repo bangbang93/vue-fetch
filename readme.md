@@ -14,6 +14,9 @@ So I wrote this small plugin to provide a "better way" ;)
 ## Usage
 
 ```javascript
+// optionally use a fetch polyfill
+import 'whatwg-fetch'
+
 import VueFetch from 'vue-fetch'
 import Vue from 'vue'
 
@@ -49,7 +52,15 @@ Access via `this.$fetch`
 Makes sense to have a separate data layer to keep with *Single Responsibility* guidelines.
 
 ```js
-import { Fetch as $ } from 'vue-fetch'
+import 'isomorphic-fetch'
+import { Fetch } from 'vue-fetch'
+
+// you can pass in mocked fetch or Headers if required
+const $ = Fetch({
+  // fetch,
+  // Headers,
+  logging: true
+})
 
 export default {
   create: async (data) => {

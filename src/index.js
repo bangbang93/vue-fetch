@@ -3,7 +3,6 @@
  */
 'use strict';
 
-import 'whatwg-fetch'
 import 'url-search-params-polyfill'
 import ES6Promise from 'es6-promise'
 
@@ -14,13 +13,28 @@ export function Fetch(opts = {}) {
     }
   }
 
-  // const headers = new Headers({
-  //   'content-type': 'application/json'
-  // })
-
-  const headers = {
-    'content-type': 'application/json'
+  const _fetch = opts.fetch || window.fetch || global.fetch
+  let _Headers = opts.Headers || window.Headers || global.Headers
+  let createHeaders = opts.createHeaders || function (obj) {
+    return new _Headers(obj)
   }
+
+  log('config', {
+    opts,
+    Headers: _Headers,
+    fetch: _fetch,
+    createHeaders
+  })
+
+  const headers = createHeaders({
+    'content-type': 'application/json'
+  })
+
+  log('config', {
+    headers
+  })
+
+  const stringify = JSON.stringify
 
   return {
     get(url, query) {
@@ -36,46 +50,46 @@ export function Fetch(opts = {}) {
       log('get', {
         request
       })
-      return fetch(url, request);
+      return _fetch(url, request);
     },
     post(url, body) {
       let request = {
         method: 'POST',
         headers,
-        body: JSON.stringify(body),
+        body: stringify(body),
         credentials: 'include',
       }
       log('post', {
         request
       })
 
-      return fetch(url, request)
+      return _fetch(url, request)
     },
     put(url, body) {
       let request = {
         method: 'put',
         headers,
-        body: JSON.stringify(body),
+        body: stringify(body),
         credentials: 'include',
       }
       log('put', {
         request
       })
 
-      return fetch(url, request)
+      return _fetch(url, request)
     },
     patch(url, body) {
       let request = {
         method: 'PATCH',
         headers,
-        body: JSON.stringify(body),
+        body: stringify(body),
         credentials: 'include',
       }
       log('patch', {
         request
       })
 
-      return fetch(url, )
+      return _fetch(url, request)
     },
     del(url, query) {
       if (query) {
@@ -92,7 +106,7 @@ export function Fetch(opts = {}) {
         request
       })
 
-      return fetch(url, request);
+      return _fetch(url, request);
     },
     fetch(method, url, query, body) {
       if (query) {
@@ -107,14 +121,14 @@ export function Fetch(opts = {}) {
       };
       if (body) {
         options.headers = headers;
-        options.body = JSON.stringify(body);
+        options.body = stringify(body);
       }
       let request = options
       log('fetch', {
         request
       })
 
-      return fetch(url, request);
+      return _fetch(url, request);
     }
   }
 };
