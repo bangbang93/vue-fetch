@@ -3,98 +3,149 @@
  */
 'use strict';
 
-import 'whatwg-fetch'
 import 'url-search-params-polyfill'
 import ES6Promise from 'es6-promise'
 
-const VueFetch = {
-  get(url, query){
-    if (query){
-      if (typeof query != 'string'){
-        query = objToSearch(query);
+export function Fetch(opts = {}) {
+  function log(name, ...msgs) {
+    if (opts.logging) {
+      console.log(`Fetch:${name}`, ...msgs)
+    }
+  }
+
+  const _fetch = opts.fetch || window.fetch || global.fetch
+  let _Headers = opts.Headers || window.Headers || global.Headers
+  let createHeaders = opts.createHeaders || function (obj) {
+    return new _Headers(obj)
+  }
+
+  log('config', {
+    opts,
+    Headers: _Headers,
+    fetch: _fetch,
+    createHeaders
+  })
+
+  const headers = createHeaders({
+    'content-type': 'application/json'
+  })
+
+  log('config', {
+    headers
+  })
+
+  const stringify = JSON.stringify
+
+  return {
+    get(url, query) {
+      if (query) {
+        if (typeof query != 'string') {
+          query = objToSearch(query);
+        }
+        url = `${url}?${query}`
       }
-      url = `${url}?${query}`
-    }
-    return fetch(url, {credentials: 'include'});
-  },
-  post(url, body){
-    return fetch(url, {
-      method: 'POST',
-      headers: new Headers({
-        'content-type': 'application/json'
-      }),
-      body: JSON.stringify(body),
-      credentials: 'include',
-    })
-  },
-  put(url, body){
-    return fetch(url, {
-      method: 'put',
-      headers: new Headers({
-        'content-type': 'application/json'
-      }),
-      body: JSON.stringify(body),
-      credentials: 'include',
-    })
-  },
-  patch(url, body){
-    return fetch(url, {
-      method: 'PATCH',
-      headers: new Headers({
-        'content-type': 'application/json'
-      }),
-      body: JSON.stringify(body),
-      credentials: 'include',
-    })
-  },
-  del(url, query){
-    if (query){
-      if (typeof query != 'string'){
-        query = objToSearch(query);
+      let request = {
+        credentials: 'include'
       }
-      url = `${url}?${query}`;
-    }
-    return fetch(url, {
-      method: 'DELETE',
-      credentials: 'include'
-    });
-  },
-  fetch(method, url, query, body){
-    if (query){
-      if (typeof query != 'string'){
-        query = objToSearch(query);
+      log('get', {
+        request
+      })
+      return _fetch(url, request);
+    },
+    post(url, body) {
+      let request = {
+        method: 'POST',
+        headers,
+        body: stringify(body),
+        credentials: 'include',
       }
-      url = `${url}?${query}`
+      log('post', {
+        request
+      })
+
+      return _fetch(url, request)
+    },
+    put(url, body) {
+      let request = {
+        method: 'put',
+        headers,
+        body: stringify(body),
+        credentials: 'include',
+      }
+      log('put', {
+        request
+      })
+
+      return _fetch(url, request)
+    },
+    patch(url, body) {
+      let request = {
+        method: 'PATCH',
+        headers,
+        body: stringify(body),
+        credentials: 'include',
+      }
+      log('patch', {
+        request
+      })
+
+      return _fetch(url, request)
+    },
+    del(url, query) {
+      if (query) {
+        if (typeof query != 'string') {
+          query = objToSearch(query);
+        }
+        url = `${url}?${query}`;
+      }
+      let request = {
+        method: 'DELETE',
+        credentials: 'include'
+      }
+      log('del', {
+        request
+      })
+
+      return _fetch(url, request);
+    },
+    fetch(method, url, query, body) {
+      if (query) {
+        if (typeof query != 'string') {
+          query = objToSearch(query);
+        }
+        url = `${url}?${query}`
+      }
+      let options = {
+        method: method.toUpperCase(),
+        credentials: 'include'
+      };
+      if (body) {
+        options.headers = headers;
+        options.body = stringify(body);
+      }
+      let request = options
+      log('fetch', {
+        request
+      })
+
+      return _fetch(url, request);
     }
-    let options = {
-      method: method.toUpperCase(),
-      credentials: 'include'
-    };
-    if (body){
-      options.headers = new Headers({
-        'content-type': 'application/json'
-      });
-      options.body = JSON.stringify(body);
-    }
-    return fetch(url, options);
   }
 };
 
-
-
-export default {
-  install: function (Vue, options = {polyfill: true}) {
-    Vue.prototype.$fetch = VueFetch;
-    if (options.polyfill){
-      ES6Promise.polyfill();
-    }
+export function install(Vue, options = {
+  polyfill: true
+}) {
+  Vue.prototype.$fetch = Fetch(options);
+  if (options.polyfill) {
+    ES6Promise.polyfill();
   }
 }
 
-function objToSearch(obj){
+function objToSearch(obj) {
   let query = new URLSearchParams();
   let keys = Object.keys(obj);
-  keys.forEach((key)=>{
+  keys.forEach((key) => {
     query.set(key, obj[key]);
   });
   return query.toString();
