@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,9 @@
     "babel-core": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-env": "^1.5.1",
-    "babel-runtime": "^6.20.0"
+    "babel-runtime": "^6.20.0",
+    "mocha": "^3.4.2",
+    "should": "^11.2.1",
+    "vue": "^2.3.3"
   }
 }

@@ -5,6 +5,7 @@
 
 import 'url-search-params-polyfill'
 import ES6Promise from 'es6-promise'
+import 'whatwg-fetch'
 
 export function Fetch(opts = {}) {
   function log(name, ...msgs) {
@@ -131,7 +132,7 @@ export function Fetch(opts = {}) {
       return _fetch(url, request);
     }
   }
-};
+}
 
 export function install(Vue, options = {
   polyfill: true
@@ -141,6 +142,10 @@ export function install(Vue, options = {
     ES6Promise.polyfill();
   }
 }
+
+Fetch.install = install;
+
+export default Fetch;
 
 function objToSearch(obj) {
   let query = new URLSearchParams();
