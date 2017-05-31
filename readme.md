@@ -1,3 +1,7 @@
+![travis-ci](https://travis-ci.org/bangbang93/vue-fetch.svg?branch=master)
+![npm](https://img.shields.io/npm/v/vue-fetch.svg)
+![dependencies](https://img.shields.io/david/bangbang93/vue-fetch.svg)
+
 # vue-fetch
 
 Use fetch in vue just like `$http` in Angular
