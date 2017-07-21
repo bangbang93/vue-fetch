@@ -90,7 +90,7 @@ export default {
 vm.$fetch.get(url, {
   page: 1
 });
-vm.$fetch.delete(url, {
+vm.$fetch.del(url, {
   limit: 1
 });
 ```
