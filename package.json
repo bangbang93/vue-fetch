@@ -24,6 +24,7 @@
   "homepage": "https://github.com/bangbang93/vue-fetch#readme",
   "dependencies": {
     "es6-promise": "^4.0.5",
+    "node-fetch": "^1.7.2",
     "url-search-params-polyfill": "^1.0.1",
     "whatwg-fetch": "^2.0.1"
   },
