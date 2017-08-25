@@ -5,7 +5,7 @@
 
 import 'url-search-params-polyfill'
 import ES6Promise from 'es6-promise'
-import 'whatwg-fetch'
+import * as WhatwgFetch from 'whatwg-fetch'
 
 export function Fetch(opts = {}) {
   function log(name, ...msgs) {
@@ -14,8 +14,8 @@ export function Fetch(opts = {}) {
     }
   }
 
-  const _fetch = opts.fetch || window.fetch || global.fetch
-  let _Headers = opts.Headers || window.Headers || global.Headers
+  const _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch) || WhatwgFetch.fetch
+  let _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers) || WhatwgFetch.Headers
   let createHeaders = opts.createHeaders || function (obj) {
     return new _Headers(obj)
   }
