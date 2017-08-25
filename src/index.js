@@ -17,8 +17,7 @@ export function Fetch(opts = {}) {
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
     || (typeof global !== 'undefined' && global.fetch)
   if (typeof process !== 'undefined' && typeof process.on === 'function') {
-    import NodeFetch from 'node-fetch'
-    _fetch = NodeFetch
+    _fetch = require('node-fetch')
   }
   let _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers) || WhatwgFetch.Headers
   let createHeaders = opts.createHeaders || function (obj) {
