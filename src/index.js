@@ -175,10 +175,6 @@ function objToSearch(obj) {
 function processBody (body) {
   switch (true) {
     case body instanceof FormData:
-      return {
-        body,
-        contentType: 'multipart/form-data',
-      }
     case typeof body === 'string':
       return {body};
     default:
