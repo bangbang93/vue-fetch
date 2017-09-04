@@ -31,10 +31,6 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
-  log('config', {
-    headers
-  })
-
   return {
     get(url, query) {
       if (query) {
