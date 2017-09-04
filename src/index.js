@@ -21,6 +21,9 @@ export function Fetch(opts = {}) {
   }
   const _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers) || WhatwgFetch.Headers
   let createHeaders = opts.createHeaders || function (obj) {
+    if (obj.hasOwnProperty('content-type') && !obj['content-type']) {
+      delete obj['content-type']
+    }
     return new _Headers(obj)
   }
 
