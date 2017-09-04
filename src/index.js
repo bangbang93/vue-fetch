@@ -19,7 +19,7 @@ export function Fetch(opts = {}) {
   if (typeof process !== 'undefined' && process.versions && process.versions.node) {
     _fetch = require('node-fetch')
   }
-  let _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers) || WhatwgFetch.Headers
+  const _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers) || WhatwgFetch.Headers
   let createHeaders = opts.createHeaders || function (obj) {
     return new _Headers(obj)
   }
@@ -31,20 +31,14 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
-  const headers = createHeaders({
-    'content-type': 'application/json'
-  })
-
   log('config', {
     headers
   })
 
-  const stringify = JSON.stringify
-
   return {
     get(url, query) {
       if (query) {
-        if (typeof query != 'string') {
+        if (typeof query !== 'string') {
           query = objToSearch(query);
         }
         url = `${url}?${query}`
@@ -57,11 +51,17 @@ export function Fetch(opts = {}) {
       })
       return _fetch(url, request);
     },
-    post(url, body) {
+    post(url, _body) {
+      const {contentType, body} = processBody(_body)
+
+      const headers = createHeaders({
+        'content-type': contentType
+      })
+
       let request = {
         method: 'POST',
         headers,
-        body: stringify(body),
+        body,
         credentials: 'include',
       }
       log('post', {
@@ -70,11 +70,17 @@ export function Fetch(opts = {}) {
 
       return _fetch(url, request)
     },
-    put(url, body) {
+    put(url, _body) {
+      const {contentType, body} = processBody(_body)
+
+      const headers = createHeaders({
+        'content-type': contentType
+      })
+
       let request = {
         method: 'put',
         headers,
-        body: stringify(body),
+        body,
         credentials: 'include',
       }
       log('put', {
@@ -83,11 +89,17 @@ export function Fetch(opts = {}) {
 
       return _fetch(url, request)
     },
-    patch(url, body) {
+    patch(url, _body) {
+      const {contentType, body} = processBody(_body)
+
+      const headers = createHeaders({
+        'content-type': contentType
+      })
+
       let request = {
         method: 'PATCH',
         headers,
-        body: stringify(body),
+        body,
         credentials: 'include',
       }
       log('patch', {
@@ -98,7 +110,7 @@ export function Fetch(opts = {}) {
     },
     del(url, query) {
       if (query) {
-        if (typeof query != 'string') {
+        if (typeof query !== 'string') {
           query = objToSearch(query);
         }
         url = `${url}?${query}`;
@@ -113,9 +125,9 @@ export function Fetch(opts = {}) {
 
       return _fetch(url, request);
     },
-    fetch(method, url, query, body) {
+    fetch(method, url, query, _body) {
       if (query) {
-        if (typeof query != 'string') {
+        if (typeof query !== 'string') {
           query = objToSearch(query);
         }
         url = `${url}?${query}`
@@ -124,9 +136,13 @@ export function Fetch(opts = {}) {
         method: method.toUpperCase(),
         credentials: 'include'
       };
-      if (body) {
-        options.headers = headers;
-        options.body = stringify(body);
+      if (_body) {
+        const {contentType, body} = processBody(_body)
+
+        options.headers = createHeaders({
+          'content-type': contentType
+        });
+        options.body = body;
       }
       let request = options
       log('fetch', {
@@ -158,4 +174,21 @@ function objToSearch(obj) {
     query.set(key, obj[key]);
   });
   return query.toString();
+}
+
+function processBody (body) {
+  switch (true) {
+    case body instanceof FormData:
+      return {
+        body,
+        contentType: 'multipart/form-data',
+      }
+    case typeof body === 'string':
+      return {body};
+    default:
+      return {
+        body: JSON.stringify(body),
+        contentType: 'application/json',
+      };
+  }
 }
