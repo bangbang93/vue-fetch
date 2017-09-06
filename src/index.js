@@ -34,122 +34,65 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
+  function doFetch({method, url, query, body, headers}) {
+    if (query) {
+      if (typeof query !== 'string') {
+        query = objToSearch(query);
+      }
+      url = `${url}?${query}`
+    }
+    let request = {
+      method: method.toUpperCase(),
+      credentials: 'include'
+    };
+    if (body) {
+      const {contentType, body: _body} = processBody(body)
+      if (contentType) {
+        headers = Object.assign(headers,{
+          'content-type': contentType
+        })
+      }
+
+      request.headers = createHeaders(headers);
+      request.body = _body;
+    }
+    log('fetch', {
+      url,
+      request
+    })
+
+    return _fetch(url, request);
+  }
+
   return {
     get(url, query) {
-      if (query) {
-        if (typeof query !== 'string') {
-          query = objToSearch(query);
-        }
-        url = `${url}?${query}`
-      }
-      let request = {
-        credentials: 'include'
-      }
-      log('get', {
-        request
-      })
-      return _fetch(url, request);
+      return doFetch({method: 'get', url, query});
     },
-    post(url, _body) {
-      const {contentType, body} = processBody(_body)
-
-      const headers = createHeaders({
-        'content-type': contentType
-      })
-
-      let request = {
-        method: 'POST',
-        headers,
-        body,
-        credentials: 'include',
-      }
-      log('post', {
-        request
-      })
-
-      return _fetch(url, request)
+    post(url, body, query) {
+      return doFetch({method: 'post', url, query, body})
     },
-    put(url, _body) {
-      const {contentType, body} = processBody(_body)
-
-      const headers = createHeaders({
-        'content-type': contentType
-      })
-
-      let request = {
-        method: 'put',
-        headers,
-        body,
-        credentials: 'include',
-      }
-      log('put', {
-        request
-      })
-
-      return _fetch(url, request)
+    put(url, body, query) {
+      return doFetch({method: 'put', url, body, query})
     },
-    patch(url, _body) {
-      const {contentType, body} = processBody(_body)
-
-      const headers = createHeaders({
-        'content-type': contentType
-      })
-
-      let request = {
-        method: 'PATCH',
-        headers,
-        body,
-        credentials: 'include',
-      }
-      log('patch', {
-        request
-      })
-
-      return _fetch(url, request)
+    patch(url, body, query) {
+      return doFetch({method: 'patch', url, body, query})
     },
     del(url, query) {
-      if (query) {
-        if (typeof query !== 'string') {
-          query = objToSearch(query);
-        }
-        url = `${url}?${query}`;
-      }
-      let request = {
-        method: 'DELETE',
-        credentials: 'include'
-      }
-      log('del', {
-        request
-      })
-
-      return _fetch(url, request);
+      return doFetch({method: 'delete', url, query})
     },
-    fetch(method, url, query, _body) {
-      if (query) {
-        if (typeof query !== 'string') {
-          query = objToSearch(query);
-        }
-        url = `${url}?${query}`
+    fetch({method, url, query, body, headers}) {
+      if (arguments.length !== 1) {
+        return doFetch({
+          method: arguments[0],
+          url: arguments[1],
+          query: arguments[2],
+          body: arguments[3],
+          headers: arguments[4],
+        })
+      } else {
+        return doFetch(arguments[0])
       }
-      let options = {
-        method: method.toUpperCase(),
-        credentials: 'include'
-      };
-      if (_body) {
-        const {contentType, body} = processBody(_body)
-
-        options.headers = createHeaders({
-          'content-type': contentType
-        });
-        options.body = body;
-      }
-      let request = options
-      log('fetch', {
-        request
-      })
-
-      return _fetch(url, request);
-    }
+    },
   }
 }
 
