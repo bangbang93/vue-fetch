@@ -1,12 +1,15 @@
 {
   "name": "vue-fetch",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Simplified fetch API for Vue 2+",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build",
     "test": "mocha"
+  },
+  "browser": {
+    "node-fetch": false
   },
   "repository": {
     "type": "git",
