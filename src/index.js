@@ -34,7 +34,7 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
-  function doFetch({method, url, query, body, headers}) {
+  function doFetch({method, url, query, body, headers = {}}) {
     if (query) {
       if (typeof query !== 'string') {
         query = objToSearch(query);
