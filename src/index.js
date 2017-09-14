@@ -122,6 +122,7 @@ function processBody (body) {
   switch (true) {
     case body instanceof FormData:
     case typeof body === 'string':
+    case body instanceof Blob:
       return {body};
     default:
       return {
