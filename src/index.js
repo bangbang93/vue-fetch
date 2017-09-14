@@ -34,7 +34,7 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
-  function doFetch({method, url, query, body, headers = {}}) {
+  function doFetch({method, url, query, body, headers = {}, credentials = 'include'}) {
     if (query) {
       if (typeof query !== 'string') {
         query = objToSearch(query);
@@ -43,7 +43,7 @@ export function Fetch(opts = {}) {
     }
     let request = {
       method: method.toUpperCase(),
-      credentials: 'include'
+      credentials
     };
     if (body) {
       const {contentType, body: _body} = processBody(body)
@@ -53,9 +53,9 @@ export function Fetch(opts = {}) {
         })
       }
 
-      request.headers = createHeaders(headers);
       request.body = _body;
     }
+    request.headers = createHeaders(headers);
     log('fetch', {
       url,
       request
