@@ -27,6 +27,8 @@ export function Fetch(opts = {}) {
     return new _Headers(obj)
   }
 
+  opts.defaultHeaders = opts.defaultHeaders || {}
+
   log('config', {
     opts,
     Headers: _Headers,
@@ -34,7 +36,7 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
-  function doFetch({method, url, query, body, headers = {}, credentials = 'include'}) {
+  function doFetch({method, url, query, body, headers = opts.defaultHeaders, credentials = 'include'}) {
     if (query) {
       if (typeof query !== 'string') {
         query = objToSearch(query);
@@ -93,6 +95,9 @@ export function Fetch(opts = {}) {
         return doFetch(arguments[0])
       }
     },
+    setDefaultHeader(key, value) {
+      opts.defaultHeaders[key] = value
+    }
   }
 }
 
