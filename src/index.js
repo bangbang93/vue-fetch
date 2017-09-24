@@ -65,8 +65,6 @@ export function Fetch(opts = {}) {
       request.body = _body;
     }
     request.headers = createHeaders(headers);
-    console.log(headers)
-    console.log(request.headers)
 
     log('fetch', {
       url,
