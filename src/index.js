@@ -8,35 +8,42 @@ import ES6Promise from 'es6-promise'
 import * as WhatwgFetch from 'whatwg-fetch'
 
 export function Fetch(opts = {}) {
-  function log(name, ...msgs) {
-    if (opts.logging) {
-      console.log(`Fetch:${name}`, ...msgs)
+  let log
+  if (opts.logging) {
+    if (typeof opts.logging === 'function') {
+      log = opts.logging
+    } else {
+      log = function log(name, ...msgs) {
+        console.log(`Fetch:${name}`, ...msgs)
+      }
     }
+  } else {
+    log = () => {}
   }
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
     || (typeof global !== 'undefined' && global.fetch)
+
   if (typeof process !== 'undefined' && process.versions && process.versions.node) {
     _fetch = require('node-fetch')
   }
-  const _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers) || WhatwgFetch.Headers
   let createHeaders = opts.createHeaders || function (obj) {
     if (obj.hasOwnProperty('content-type') && !obj['content-type']) {
       delete obj['content-type']
     }
-    return new _Headers(obj)
+    return new _fetch.Headers(obj)
   }
 
   opts.defaultHeaders = opts.defaultHeaders || {}
 
   log('config', {
     opts,
-    Headers: _Headers,
     fetch: _fetch,
     createHeaders
   })
 
-  function doFetch({method, url, query, body, headers = opts.defaultHeaders, credentials = 'include'}) {
+  function doFetch({method, url, query, body, headers = {}, credentials = 'include'}) {
+    headers = Object.assign(opts.defaultHeaders, headers)
     if (query) {
       if (typeof query !== 'string') {
         query = objToSearch(query);
@@ -58,6 +65,9 @@ export function Fetch(opts = {}) {
       request.body = _body;
     }
     request.headers = createHeaders(headers);
+    console.log(headers)
+    console.log(request.headers)
+
     log('fetch', {
       url,
       request
