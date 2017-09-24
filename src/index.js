@@ -23,15 +23,19 @@ export function Fetch(opts = {}) {
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
     || (typeof global !== 'undefined' && global.fetch)
+  let _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers)
+    || (typeof global !== 'undefined' && global.Headers)
 
   if (typeof process !== 'undefined' && process.versions && process.versions.node) {
     _fetch = require('node-fetch')
+    _Headers = _fetch.Headers
   }
+
   let createHeaders = opts.createHeaders || function (obj) {
     if (obj.hasOwnProperty('content-type') && !obj['content-type']) {
       delete obj['content-type']
     }
-    return new _fetch.Headers(obj)
+    return new _Headers(obj)
   }
 
   opts.defaultHeaders = opts.defaultHeaders || {}
