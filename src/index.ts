@@ -4,10 +4,50 @@
 'use strict';
 
 import 'url-search-params-polyfill'
-import ES6Promise from 'es6-promise'
-import * as WhatwgFetch from 'whatwg-fetch'
+import * as ES6Promise from 'es6-promise'
 
-export function Fetch(opts = {}) {
+export interface IOptions {
+  logging?: Function
+  fetch?: Function
+  Headers?: any
+  createHeaders?: Function
+  defaultHeaders?: any
+  polyfill?: boolean
+}
+
+interface IDoFetchArguments {
+  url: string,
+  method: string,
+  query?: any,
+  body?: any,
+  headers?: any,
+  credentials?: any,
+}
+
+export interface IFetch {
+  (opts:IOptions): IVueFetch
+  install?: Function
+}
+
+export interface IRawFetch {
+  method: string,
+  url: string,
+  query: any,
+  body: any,
+  headers: any,
+}
+
+export interface IVueFetch {
+  get(url: string, query?: any): Response
+  post(url: string, body?: any, query?: any): Response
+  put(url: string, body?: any, query?: any): Response
+  patch(url: string, body?: any, query?: any): Response
+  del(url: string, query?: any): Response
+  fetch(options: IRawFetch): Response
+  setDefaultHeader(key: string, value: string)
+}
+
+export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
   let log
   if (opts.logging) {
     if (typeof opts.logging === 'function') {
@@ -22,9 +62,9 @@ export function Fetch(opts = {}) {
   }
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
-    || (typeof global !== 'undefined' && global.fetch)
-  let _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers)
-    || (typeof global !== 'undefined' && global.Headers)
+    || (typeof global !== 'undefined' && global['fetch'])
+  let _Headers = opts.Headers || (typeof window !== 'undefined' && window['Headers'])
+    || (typeof global !== 'undefined' && global['Headers'])
 
   if (typeof process !== 'undefined' && process.versions && process.versions.node) {
     _fetch = require('node-fetch')
@@ -46,7 +86,7 @@ export function Fetch(opts = {}) {
     createHeaders
   })
 
-  function doFetch({method, url, query, body, headers = {}, credentials = 'include'}) {
+  function doFetch({method, url, query, body, headers = {}, credentials = 'include'}: IDoFetchArguments) {
     headers = Object.assign(opts.defaultHeaders, headers)
     if (query) {
       if (typeof query !== 'string') {
@@ -56,7 +96,9 @@ export function Fetch(opts = {}) {
     }
     let request = {
       method: method.toUpperCase(),
-      credentials
+      credentials,
+      body: null,
+      headers: null,
     };
     if (body) {
       const {contentType, body: _body} = processBody(body)
@@ -113,9 +155,7 @@ export function Fetch(opts = {}) {
   }
 }
 
-export function install(Vue, options = {
-  polyfill: true
-}) {
+export function install(Vue, options: IOptions = {polyfill: true}) {
   Vue.prototype.$fetch = Fetch(options);
   if (options.polyfill) {
     ES6Promise.polyfill();

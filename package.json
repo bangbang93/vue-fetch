@@ -1,10 +1,11 @@
 {
   "name": "vue-fetch",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "description": "Simplified fetch API for Vue 2+",
   "main": "lib/index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "tsc",
     "prepublish": "npm run build",
     "test": "mocha"
   },
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/bangbang93/vue-fetch#readme",
   "dependencies": {
+    "@types/node": "^9.4.6",
     "es6-promise": "^4.0.5",
     "node-fetch": "^1.7.2",
     "url-search-params-polyfill": "^1.0.1",
@@ -39,6 +41,7 @@
     "babel-runtime": "^6.20.0",
     "mocha": "^3.4.2",
     "should": "^11.2.1",
+    "typescript": "^2.7.2",
     "vue": "^2.3.3"
   }
 }
