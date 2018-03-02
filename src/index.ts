@@ -4,7 +4,6 @@
 
 'use strict'
 
-import 'url-search-params-polyfill'
 import * as Debug from 'debug'
 import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
 
