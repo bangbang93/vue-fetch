@@ -1,65 +1,16 @@
 /**
  * Created by bangbang93 on 2016/12/9.
  */
-'use strict';
+
+'use strict'
 
 import 'url-search-params-polyfill'
-import * as ES6Promise from 'es6-promise'
+import * as Debug from 'debug'
+import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
 
-export interface IOptions {
-  logging?: Function
-  fetch?: Function
-  Headers?: any
-  createHeaders?: Function
-  defaultHeaders?: any
-  polyfill?: boolean
-}
-
-interface IDoFetchArguments {
-  url: string,
-  method: string,
-  query?: any,
-  body?: any,
-  headers?: any,
-  credentials?: any,
-}
-
-export interface IFetch {
-  (opts:IOptions): IVueFetch
-  install?: Function
-}
-
-export interface IRawFetch {
-  method: string,
-  url: string,
-  query: any,
-  body: any,
-  headers: any,
-}
-
-export interface IVueFetch {
-  get(url: string, query?: any): Response
-  post(url: string, body?: any, query?: any): Response
-  put(url: string, body?: any, query?: any): Response
-  patch(url: string, body?: any, query?: any): Response
-  del(url: string, query?: any): Response
-  fetch(options: IRawFetch): Response
-  setDefaultHeader(key: string, value: string)
-}
+const debug = Debug('vue-fetch')
 
 export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
-  let log
-  if (opts.logging) {
-    if (typeof opts.logging === 'function') {
-      log = opts.logging
-    } else {
-      log = function log(name, ...msgs) {
-        console.log(`Fetch:${name}`, ...msgs)
-      }
-    }
-  } else {
-    log = () => {}
-  }
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
     || (typeof global !== 'undefined' && global['fetch'])
@@ -80,17 +31,17 @@ export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
 
   opts.defaultHeaders = opts.defaultHeaders || {}
 
-  log('config', {
+  debug('config', {
     opts,
     fetch: _fetch,
-    createHeaders
+    createHeaders,
   })
 
   function doFetch({method, url, query, body, headers = {}, credentials = 'include'}: IDoFetchArguments) {
     headers = Object.assign(opts.defaultHeaders, headers)
     if (query) {
       if (typeof query !== 'string') {
-        query = objToSearch(query);
+        query = objToSearch(query)
       }
       url = `${url}?${query}`
     }
@@ -99,30 +50,30 @@ export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
       credentials,
       body: null,
       headers: null,
-    };
+    }
     if (body) {
       const {contentType, body: _body} = processBody(body)
       if (contentType) {
         headers = Object.assign(headers,{
-          'content-type': contentType
+          'content-type': contentType,
         })
       }
 
-      request.body = _body;
+      request.body = _body
     }
-    request.headers = createHeaders(headers);
+    request.headers = createHeaders(headers)
 
-    log('fetch', {
+    debug('fetch', {
       url,
-      request
+      request,
     })
 
-    return _fetch(url, request);
+    return _fetch(url, request)
   }
 
   return {
     get(url, query) {
-      return doFetch({method: 'get', url, query});
+      return doFetch({method: 'get', url, query})
     },
     post(url, body, query) {
       return doFetch({method: 'post', url, query, body})
@@ -151,28 +102,25 @@ export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
     },
     setDefaultHeader(key, value) {
       opts.defaultHeaders[key] = value
-    }
+    },
   }
 }
 
 export function install(Vue, options: IOptions = {polyfill: true}) {
-  Vue.prototype.$fetch = Fetch(options);
-  if (options.polyfill) {
-    ES6Promise.polyfill();
-  }
+  Vue.prototype.$fetch = Fetch(options)
 }
 
-Fetch.install = install;
+Fetch.install = install
 
-export default Fetch;
+export default Fetch
 
 function objToSearch(obj) {
-  let query = new URLSearchParams();
-  let keys = Object.keys(obj);
+  let query = new URLSearchParams()
+  let keys = Object.keys(obj)
   keys.forEach((key) => {
-    query.set(key, obj[key]);
-  });
-  return query.toString();
+    query.set(key, obj[key])
+  })
+  return query.toString()
 }
 
 function processBody (body) {
@@ -180,11 +128,11 @@ function processBody (body) {
     case body instanceof FormData:
     case typeof body === 'string':
     case body instanceof Blob:
-      return {body};
+      return {body}
     default:
       return {
         body: JSON.stringify(body),
         contentType: 'application/json',
-      };
+      }
   }
 }

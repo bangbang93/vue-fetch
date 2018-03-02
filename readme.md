@@ -6,6 +6,12 @@
 
 Use fetch in vue just like `$http` in Angular
 
+## polyfill
+polyfill you may need
+- url-search-params-polyfill
+- whatwg-fetch
+- es6-promise
+
 ## Why
 
 Fetch API is awesome... but it has some feature I don't like :()
