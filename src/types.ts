@@ -15,7 +15,7 @@ export interface IDoFetchArguments {
   credentials?: any,
 }
 
-export interface IFetch {
+export interface IFetch extends PluginFunction<IVueFetch>{
   (opts?: IOptions): IVueFetch
   install?: Function
 }
@@ -38,7 +38,7 @@ export interface IVueFetch {
   setDefaultHeader(key: string, value: string)
 }
 
-import Vue from 'vue'
+import Vue, {PluginFunction} from 'vue'
 
 declare module 'vue/types/vue' {
   interface Vue {
