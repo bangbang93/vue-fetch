@@ -3,3 +3,5 @@
  */
 'use strict';
 require('should');
+require('ts-node/register')
+require('./vue-fetch')

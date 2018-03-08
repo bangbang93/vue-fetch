@@ -9,7 +9,7 @@ import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
 
 const debug = Debug('vue-fetch')
 
-export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
+const VueFetch = function VueFetch(opts: IOptions = {}): IVueFetch {
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
     || (typeof global !== 'undefined' && global['fetch'])
@@ -103,15 +103,17 @@ export const Fetch: IFetch = function Fetch(opts: IOptions = {}): IVueFetch {
       opts.defaultHeaders[key] = value
     },
   }
-}
+} as any
 
 export function install(Vue, options: IOptions = {polyfill: true}) {
   Vue.prototype.$fetch = Fetch(options)
 }
 
-Fetch.install = install
+VueFetch.install = install
 
-export default Fetch
+export const Fetch: IFetch = VueFetch
+
+export default VueFetch
 
 function objToSearch(obj) {
   let query = new URLSearchParams()
