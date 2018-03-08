@@ -9,12 +9,12 @@ describe('vue-fetch', function () {
   it('should install in vue', function () {
     Vue.use(VueFetch);
     const vm = new Vue();
-    vm.should.property('$fetch');
-    vm.$fetch.get.should.be.Function();
+    vm['should'].property('$fetch');
+    vm.$fetch.get['should'].be.Function();
   });
   it('should can be used in other contexts', function () {
     const fetch = VueFetch();
-    fetch.should.hasOwnProperty('get');
-    fetch.get.should.be.Function();
+    fetch['should'].hasOwnProperty('get');
+    fetch.get['should'].be.Function();
   });
 });
