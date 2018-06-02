@@ -9,7 +9,7 @@ import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
 
 let URLSearchParams
 if (typeof this.URLSearchParams === 'undefined') {
-  URLSearchParams = require('urlsearchparams')
+  URLSearchParams = require('urlsearchparams').URLSearchParams
 } else {
   URLSearchParams = this.URLSearchParams
 }
