@@ -7,8 +7,11 @@
 import * as Debug from 'debug'
 import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
 
-if (typeof URLSearchParams === 'undefined') {
-  window.URLSearchParams = require('urlsearchparams')
+let URLSearchParams
+if (typeof this.URLSearchParams === 'undefined') {
+  URLSearchParams = require('urlsearchparams')
+} else {
+  URLSearchParams = this.URLSearchParams
 }
 
 const debug = Debug('vue-fetch')
