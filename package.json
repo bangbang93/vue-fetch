@@ -1,6 +1,6 @@
 {
   "name": "vue-fetch",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Simplified fetch API for Vue 2+",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

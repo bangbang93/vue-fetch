@@ -1,3 +1,6 @@
 .idea
 .gitignore
 .babelrc
+src
+test
+.travis.yml
