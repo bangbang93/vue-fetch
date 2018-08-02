@@ -1,6 +1,6 @@
 {
   "name": "vue-fetch",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Simplified fetch API for Vue 2+",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -10,8 +10,7 @@
     "test": "mocha"
   },
   "browser": {
-    "node-fetch": false,
-    "urlsearchparams": false
+    "node-fetch": false
   },
   "repository": {
     "type": "git",
@@ -31,8 +30,7 @@
     "@types/debug": "0.0.30",
     "@types/node": "^9.4.6",
     "debug": "^3.1.0",
-    "node-fetch": "^1.7.2",
-    "urlsearchparams": "^0.1.1"
+    "node-fetch": "^1.7.2"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.48",

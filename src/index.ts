@@ -2,17 +2,11 @@
  * Created by bangbang93 on 2016/12/9.
  */
 
+
 'use strict'
 
 import * as Debug from 'debug'
 import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
-
-let URLSearchParams
-if (typeof this.URLSearchParams === 'undefined') {
-  URLSearchParams = require('urlsearchparams').URLSearchParams
-} else {
-  URLSearchParams = this.URLSearchParams
-}
 
 const debug = Debug('vue-fetch')
 
