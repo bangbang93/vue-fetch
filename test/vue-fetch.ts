@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueFetch from '../src/'
 import 'should'
 
+console.log(require('vue'))
+
 global['window'] = {};
 global['Headers'] = function () {};
 

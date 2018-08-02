@@ -8,6 +8,10 @@
 import * as Debug from 'debug'
 import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
 
+if (typeof URLSearchParams === 'undefined') {
+  URLSearchParams = require('url').URLSearchParams
+}
+
 const debug = Debug('vue-fetch')
 
 const VueFetch = function VueFetch(opts: IOptions = {}): IVueFetch {
