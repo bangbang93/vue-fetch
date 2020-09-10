@@ -30,7 +30,7 @@
     "@types/debug": "0.0.30",
     "@types/node": "^9.4.6",
     "debug": "^3.1.0",
-    "node-fetch": "^1.7.2"
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.48",
