@@ -15,10 +15,6 @@ export interface IDoFetchArguments {
   credentials?: any,
 }
 
-export interface IFetch extends PluginObject<IOptions> {
-  (opts?: IOptions): IVueFetch
-}
-
 export interface IRawFetch {
   method: string,
   url: string,
@@ -37,10 +33,9 @@ export interface IVueFetch {
   setDefaultHeader(key: string, value: string)
 }
 
-import Vue, {PluginFunction, PluginObject} from 'vue'
 
-declare module 'vue/types/vue' {
-  interface Vue {
+declare module 'vue' {
+  interface ComponentCustomProperties {
     $fetch: IVueFetch
   }
 }

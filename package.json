@@ -38,7 +38,10 @@
     "mocha": "^7.1.1",
     "should": "^11.2.1",
     "ts-node": "^5.0.1",
-    "typescript": "^2.7.2",
-    "vue": "^2.5.16"
+    "typescript": "^4.9.3",
+    "vue": "3"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.45"
   }
 }

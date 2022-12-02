@@ -6,7 +6,8 @@
 'use strict'
 
 import * as Debug from 'debug'
-import {IFetch, IOptions, IVueFetch, IDoFetchArguments} from './types'
+import {App} from 'vue'
+import {IDoFetchArguments, IOptions, IVueFetch} from './types'
 
 let _URLSearchParams
 if (typeof URLSearchParams === 'undefined') {
@@ -113,13 +114,13 @@ const VueFetch = function VueFetch(opts: IOptions = {}): IVueFetch {
   }
 } as any
 
-export function install(Vue, options: IOptions = {polyfill: true}) {
-  Vue.prototype.$fetch = Fetch(options)
+export function install(app: App, options: IOptions = {polyfill: true}) {
+  app.config.globalProperties.$fetch = Fetch(options)
 }
 
 VueFetch.install = install
 
-export const Fetch: IFetch = VueFetch
+export const Fetch = VueFetch
 
 export default VueFetch
 
