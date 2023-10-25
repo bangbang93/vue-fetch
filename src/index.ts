@@ -5,7 +5,7 @@
 
 'use strict'
 
-import * as Debug from 'debug'
+import Debug from 'debug'
 import {App} from 'vue'
 import {IDoFetchArguments, IOptions, IVueFetch} from './types'
 

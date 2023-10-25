@@ -7,7 +7,8 @@
     "outDir": "lib",
     "sourceRoot": "src",
     "declaration": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src"
