@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2019",
     "sourceMap": true,
     "outDir": "lib",
     "sourceRoot": "src",
-    "lib": ["es5", "es6", "es7", "dom"],
     "declaration": true,
     "skipLibCheck": true
   },

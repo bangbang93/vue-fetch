@@ -9,13 +9,6 @@ import * as Debug from 'debug'
 import {App} from 'vue'
 import {IDoFetchArguments, IOptions, IVueFetch} from './types'
 
-let _URLSearchParams
-if (typeof URLSearchParams === 'undefined') {
-  _URLSearchParams = require('url').URLSearchParams
-} else {
-  _URLSearchParams = URLSearchParams
-}
-
 const debug = Debug('vue-fetch')
 
 const VueFetch = function VueFetch(opts: IOptions = {}): IVueFetch {
@@ -125,7 +118,7 @@ export const Fetch = VueFetch
 export default VueFetch
 
 function objToSearch(obj) {
-  let query = new _URLSearchParams()
+  let query = new URLSearchParams()
   let keys = Object.keys(obj)
   keys.forEach((key) => {
     query.set(key, obj[key])
