@@ -11,7 +11,7 @@ import {IDoFetchArguments, IOptions, IVueFetch} from './types'
 
 const debug = Debug('vue-fetch')
 
-const VueFetch = function VueFetch(opts: IOptions = {}): IVueFetch {
+function VueFetch(opts: IOptions = {}): IVueFetch {
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
     || (typeof global !== 'undefined' && global['fetch'])
@@ -105,7 +105,7 @@ const VueFetch = function VueFetch(opts: IOptions = {}): IVueFetch {
       opts.defaultHeaders[key] = value
     },
   }
-} as any
+}
 
 export function install(app: App, options: IOptions = {polyfill: true}) {
   app.config.globalProperties.$fetch = Fetch(options)
