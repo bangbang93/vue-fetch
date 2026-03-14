@@ -1,14 +1,15 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
   "compilerOptions": {
+    "target": "es2020",
     "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es2019",
+    "moduleResolution": "bundler",
+    "strict": false,
+    "declaration": true,
+    "declarationMap": true,
     "sourceMap": true,
     "outDir": "lib",
-    "sourceRoot": "src",
-    "declaration": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
+    "sourceRoot": "src"
   },
   "include": [
     "src"

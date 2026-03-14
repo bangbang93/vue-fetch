@@ -139,3 +139,5 @@ function processBody (body) {
       }
   }
 }
+
+export type { IOptions, IVueFetch, IDoFetchArguments, IRawFetch } from './types'
