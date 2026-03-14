@@ -4,12 +4,7 @@
     "target": "es2020",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "strict": false,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "outDir": "lib",
-    "sourceRoot": "src"
+    "strict": false
   },
   "include": [
     "src"

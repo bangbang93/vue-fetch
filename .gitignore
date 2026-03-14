@@ -84,4 +84,5 @@ crashlytics-build.properties
 fabric.properties
 
 lib/
+dist/
 .idea/

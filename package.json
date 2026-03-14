@@ -2,19 +2,23 @@
   "name": "vue-fetch",
   "version": "3.0.1-0",
   "description": "Simplified fetch API for Vue 2+",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsdown",
     "prepublish": "npm run build",
     "test": "mocha"
   },
   "exports": {
     ".": {
       "import": {
-        "types": "./lib/index.d.ts",
-        "default": "./lib/index.js"
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
       }
     }
   },
@@ -37,7 +41,6 @@
   "homepage": "https://github.com/bangbang93/vue-fetch#readme",
   "dependencies": {
     "@types/debug": "0.0.30",
-    "@types/node": "^9.4.6",
     "debug": "^3.1.0",
     "node-fetch": "^2.6.1"
   },
@@ -45,11 +48,13 @@
     "@release-it/conventional-changelog": "^10.0.6",
     "@tsconfig/recommended": "^1.0.13",
     "@types/mocha": "^2.2.48",
+    "@types/node": "^20.19.37",
     "@types/should": "^13.0.0",
     "mocha": "^11.7.5",
     "release-it": "^19.2.4",
     "should": "^11.2.1",
     "ts-node": "^5.0.1",
+    "tsdown": "^0.21.2",
     "typescript": "^5.0.0",
     "vue": "^3.2.45"
   },
