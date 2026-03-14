@@ -3,5 +3,7 @@ git:
   push: true
   tag: true
   tagName: v${version}
-hooks:
-  after:version:bump: auto-changelog -p
+plugins:
+  '@release-it/conventional-changelog':
+    preset: angular
+    infile: CHANGELOG.md
