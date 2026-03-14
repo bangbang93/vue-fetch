@@ -22,9 +22,6 @@
       }
     }
   },
-  "browser": {
-    "node-fetch": false
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bangbang93/vue-fetch.git"
@@ -39,10 +36,12 @@
     "url": "https://github.com/bangbang93/vue-fetch/issues"
   },
   "homepage": "https://github.com/bangbang93/vue-fetch#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@types/debug": "0.0.30",
-    "debug": "^3.1.0",
-    "node-fetch": "^2.6.1"
+    "debug": "^3.1.0"
   },
   "devDependencies": {
     "@release-it/conventional-changelog": "^10.0.6",

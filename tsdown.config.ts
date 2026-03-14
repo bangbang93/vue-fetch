@@ -5,6 +5,6 @@ export default defineConfig({
   format: ['esm', 'cjs'],
   dts: true,
   deps: {
-    neverBundle: ['node-fetch', 'debug', 'vue'],
+    neverBundle: ['debug', 'vue'],
   },
 })

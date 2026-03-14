@@ -14,14 +14,9 @@ const debug = Debug('vue-fetch')
 function VueFetch(opts: IOptions = {}): IVueFetch {
 
   let _fetch = opts.fetch || (typeof window !== 'undefined' && window.fetch)
-    || (typeof global !== 'undefined' && global['fetch'])
-  let _Headers = opts.Headers || (typeof window !== 'undefined' && window['Headers'])
-    || (typeof global !== 'undefined' && global['Headers'])
-
-  if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-    _fetch = require('node-fetch')
-    _Headers = _fetch.Headers
-  }
+    || (typeof global !== 'undefined' && global.fetch)
+  let _Headers = opts.Headers || (typeof window !== 'undefined' && window.Headers)
+    || (typeof global !== 'undefined' && global.Headers)
 
   let createHeaders = opts.createHeaders || function (obj) {
     if (obj.hasOwnProperty('content-type') && !obj['content-type']) {
