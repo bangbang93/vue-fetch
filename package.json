@@ -1,6 +1,6 @@
 {
   "name": "vue-fetch",
-  "version": "3.1.0-0",
+  "version": "3.1.0-1",
   "description": "Simplified fetch API for Vue 2+",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
