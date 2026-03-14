@@ -1,5 +1,7 @@
 # Changelog
 
+# [3.1.0-0](https://github.com/bangbang93/vue-fetch/compare/v3.0.1-0...v3.1.0-0) (2026-03-14)
+
 ## [3.0.1-0](https://github.com/bangbang93/vue-fetch/compare/v3.0.0...v3.0.1-0) (2026-03-14)
 
 
