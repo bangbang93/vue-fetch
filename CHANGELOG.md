@@ -1,4 +1,13 @@
-### Changelog
+# Changelog
+
+## [3.0.1-0](https://github.com/bangbang93/vue-fetch/compare/v3.0.0...v3.0.1-0) (2026-03-14)
+
+
+### Bug Fixes
+
+* 修复 TypeScript 类型定义无法正确解析的问题 ([7424834](https://github.com/bangbang93/vue-fetch/commit/74248346c6a75845ae140bdcf8bac41f7e9855b2))
+
+##
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
