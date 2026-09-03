@@ -32,6 +32,7 @@
   ],
   "author": "bangbang93",
   "license": "ISC",
+  "packageManager": "pnpm@11.20.0",
   "bugs": {
     "url": "https://github.com/bangbang93/vue-fetch/issues"
   },
