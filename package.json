@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsdown",
     "prepublish": "pnpm run build",
-    "test": "mocha"
+    "test": "vitest run"
   },
   "exports": {
     ".": {
@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/bangbang93/vue-fetch#readme",
   "engines": {
-    "node": ">=20.19.0"
+    "node": ">=22.13.0"
   },
   "dependencies": {
     "@types/debug": "0.0.30",
@@ -46,15 +46,11 @@
   "devDependencies": {
     "@release-it/conventional-changelog": "^12.0.0",
     "@tsconfig/recommended": "^1.0.13",
-    "@types/mocha": "^2.2.48",
-    "@types/node": "^20.19.37",
-    "@types/should": "^13.0.0",
-    "mocha": "^12.0.0",
+    "@types/node": "^22.20.1",
     "release-it": "^21.0.1",
-    "should": "^11.2.1",
-    "ts-node": "^10.9.2",
     "tsdown": "^0.21.2",
     "typescript": "^5.0.0",
+    "vitest": "^5.0.0",
     "vue": "^3.2.45"
   },
   "peerDependencies": {
