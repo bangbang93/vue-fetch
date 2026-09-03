@@ -1,6 +1,5 @@
 [![CI](https://github.com/bangbang93/vue-fetch/actions/workflows/ci.yml/badge.svg)](https://github.com/bangbang93/vue-fetch/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/vue-fetch.svg)](https://www.npmjs.com/package/vue-fetch)
-[![dependencies](https://img.shields.io/david/bangbang93/vue-fetch.svg)](https://david-dm.org/bangbang93/vue-fetch)
 
 # vue-fetch
 
