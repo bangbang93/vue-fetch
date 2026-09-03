@@ -2,8 +2,8 @@ import { createApp } from 'vue'
 import VueFetch from '../dist/index.mjs'
 import 'should'
 
-global['window'] = {};
-global['Headers'] = function () {};
+(global as any).window = {};
+(global as any).Headers = function () {};
 
 describe('vue-fetch', function () {
   it('should install in vue', function () {

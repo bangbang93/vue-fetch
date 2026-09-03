@@ -49,10 +49,10 @@
     "@types/mocha": "^2.2.48",
     "@types/node": "^20.19.37",
     "@types/should": "^13.0.0",
-    "mocha": "^11.7.5",
+    "mocha": "^12.0.0",
     "release-it": "^21.0.1",
     "should": "^11.2.1",
-    "ts-node": "^5.0.1",
+    "ts-node": "^10.9.2",
     "tsdown": "^0.21.2",
     "typescript": "^5.0.0",
     "vue": "^3.2.45"
