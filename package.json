@@ -7,7 +7,7 @@
   "types": "dist/index.d.mts",
   "scripts": {
     "build": "tsdown",
-    "prepublish": "npm run build",
+    "prepublish": "pnpm run build",
     "test": "mocha"
   },
   "exports": {
